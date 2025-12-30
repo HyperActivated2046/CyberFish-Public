@@ -1,0 +1,18 @@
+{
+  "bind_host": "127.0.0.1",
+  "bind_port": 8000,
+  "enable_cloudflared": true,
+  "cloudflared_path": "./resources/CloudFlare/cloudflared-windows-amd64.exe",
+  "cloudflared_log": "./resources/CloudFlare/cld.log",
+  "cloudflared_wait_seconds": 6,
+  "redirect_url": "https://www.example.com",
+  "immediate_feedback_enabled": true,
+  "immediate_feedback_mode": "default",
+  "password_pepper_hex": "e89e95374455944299b5cc8209c02b624808b9bcc6ac5fdfeeb3838a7fac24ff",
+  "log_encryption_key_hex": "4d75b47b95809de461e3d127929bf50484c291f4134bdfbcc20aa5d35201f5a2",
+  "dark_mode": false,
+  "auto_refresh_interval": 5,
+  "store_raw_passwords": false,
+  "jwt_like_expiry_minutes": 60,
+  "has_opened_before": false
+}

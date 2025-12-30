@@ -1,0 +1,10 @@
+Flask
+beautifulsoup4
+reportlab
+pyperclip
+certifi
+idna
+requests
+urllib3
+sv-ttk
+cryptography

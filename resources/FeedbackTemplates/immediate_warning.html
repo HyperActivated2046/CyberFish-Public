@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>Security Awareness — Phishing Attempt Detected</title>
+<style>
+  :root {
+    --bg-color: #0b1020;
+    --card-bg-color: #111827;
+    --tile-bg-color: #0f172a;
+    --border-color: #1f2937;
+    --text-color: #f1f5f9;
+    --heading-color: #f87171;
+    --link-color: #93c5fd;
+    --badge-bg-color: #b91c1c;
+    --badge-text-color: #fff;
+  }
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin:0; background:var(--bg-color); color:var(--text-color); transition: background .3s ease; }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 32px 20px 56px; }
+  .card { background:var(--card-bg-color); border-radius:16px; padding:24px; box-shadow:0 10px 35px rgba(0,0,0,.35); transition: background .3s ease; }
+  h1 { font-size: clamp(24px, 3vw, 34px); margin: 0 0 12px; color:var(--heading-color); transition: color .3s ease; }
+  .badge { display:inline-block; background:var(--badge-bg-color); color:var(--badge-text-color); padding:6px 10px; border-radius:999px; font-weight:600; font-size:13px; letter-spacing:.3px; margin-bottom:12px; transition: background .3s ease; }
+  .grid { display:grid; gap:16px; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); margin-top:14px; }
+  .tile { background:var(--tile-bg-color); border:1px solid var(--border-color); border-radius:12px; padding:14px; transition: background .3s ease, border-color .3s ease; }
+  .tile h3 { margin:0 0 6px; font-size:16px; color:var(--link-color); }
+  ul { margin:8px 0 0 18px; padding: 0;}
+  li { margin:6px 0; }
+  .footer { margin-top:20px; font-size:13px; color:#cbd5e1; opacity:.9; }
+  a { color:var(--link-color); }
+  .info-block { background: #0c1222; border: 1px solid #1e293b; border-radius: 8px; padding: 16px; margin-top: 24px; }
+  .info-block h2 { margin: 0 0 10px; font-size: 18px; color: #eab308; }
+  .info-block p { margin: 4px 0; font-family: 'Courier New', Courier, monospace; font-size: 15px; }
+  .info-block strong { color: #facc15; }
+  #repeat-offender-warning { display: none; }
+  .cta-button {
+    display: inline-block;
+    background-color: #3b82f6;
+    color: #ffffff;
+    padding: 12px 24px;
+    margin: 12px 0 4px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+    border: 1px solid #1e40af;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+  .cta-button:hover, .cta-button:focus {
+    background-color: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <span class="badge">TRAINING FEEDBACK</span>
+      <div id="repeat-offender-warning">
+          <h1 id="repeat-title"></h1>
+          <p id="repeat-message"></p>
+      </div>
+      <h1>You just interacted with a simulated phishing page.</h1>
+      <p>This was a safe, internal exercise to help build your security awareness. <strong>No passwords were ever stored.</strong></p>
+      <p>The goal is to learn, not to punish. Review the details below to see how you can protect yourself and the organization from real-world threats.</p>
+
+      <div class="info-block" id="user-info-display" style="display: none;">
+        <h2>For Your Awareness, We See:</h2>
+        <p><strong>Your IP Address:</strong> <span id="user-ip">{{USER_IP}}</span></p>
+        <p><strong>Your Email:</strong> <span id="user-email">{{USER_EMAIL}}</span></p>
+        <p><strong>Your Browser/System:</strong> <span id="user-agent">{{USER_AGENT}}</span></p>
+        <p style="margin-top:12px; font-family: system-ui, sans-serif; font-size: 13px; color: #9ca3af;">In a real phishing attack, criminals use this information to build trust and craft more convincing attacks. Always be vigilant.</p>
+      </div>
+
+      <div class="grid">
+        <div class="tile">
+          <h3>How to Spot a Phish</h3>
+          <ul>
+            <li><strong>Check the domain:</strong> Look for misspellings, extra words, or unusual endings.</li>
+            <li><strong>Urgent Language:</strong> Be wary of threats or urgent demands (“<em>verify now</em>”, “<em>account suspended</em>”).</li>
+            <li><strong>Preview Links:</strong> On a computer, hover over links to see the real destination URL before you click.</li>
+          </ul>
+        </div>
+        <div class="tile" style="text-align: center;">
+          <h3>Take a Quiz, Test Your Skills!</h3>
+          <p>Ready to see if you can spot a phish in the wild? Take this quiz to sharpen your skills.</p>
+          <a href="https://phishingquiz.withgoogle.com/" class="cta-button" target="_blank" rel="noopener noreferrer">Take Google's Phishing Quiz</a>
+          <p style="font-size:12px; color:#9ca3af; margin-top:12px;">This is an external link to a free, educational tool provided by Google.</p>
+        </div>
+        <div class="tile">
+          <h3>What to Do Next</h3>
+          <ul>
+            <li><strong>Report It:</strong> In a real scenario, report suspicious messages to your IT/Security team immediately.</li>
+            <li><strong>Use Unique Passwords:</strong> If you entered a real password, change it everywhere you've used it. Use a password manager to help.</li>
+            <li><strong>Enable MFA:</strong> Multi-factor authentication is one of the best defenses against password theft.</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="footer">This was a controlled security exercise. If you have questions, please contact your security team. </p>
+    </div>
+  </div>
+
+  <div id="repeat-data" data-repeat-count="{{REPEAT_COUNT}}" style="display:none;"></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const repeatData = document.getElementById('repeat-data');
+      const repeatCount = parseInt(repeatData.getAttribute('data-repeat-count'), 10);
+      const body = document.body;
+
+      const ip = document.getElementById('user-ip').textContent.trim();
+      const email = document.getElementById('user-email').textContent.trim();
+      
+      // Only show the info block if we have some real data to show
+      if (ip || email) {
+        document.getElementById('user-info-display').style.display = 'block';
+      }
+
+      if (isNaN(repeatCount) || repeatCount <= 1) {
+        // First time, do nothing special
+        return;
+      }
+
+      const warningDiv = document.getElementById('repeat-offender-warning');
+      const title = document.getElementById('repeat-title');
+      const message = document.getElementById('repeat-message');
+      warningDiv.style.display = 'block';
+
+      if (repeatCount === 2) {
+        title.textContent = "You've been here before...";
+        message.textContent = "This page looks familiar, right? This is the second time you've landed on a simulated phishing page. Let's make sure it's the last.";
+        
+        // Make colors a bit more attention-grabbing
+        body.style.setProperty('--bg-color', '#200b0b');
+        body.style.setProperty('--card-bg-color', '#271111');
+        body.style.setProperty('--tile-bg-color', '#2a0f0f');
+        body.style.setProperty('--border-color', '#371f1f');
+        body.style.setProperty('--heading-color', '#fca5a5');
+        body.style.setProperty('--badge-bg-color', '#dc2626');
+
+      } else if (repeatCount >= 3) {
+        title.textContent = "ATTENTION: REPEATED RISK DETECTED";
+        message.innerHTML = "This is your <strong>" + repeatCount + "rd</strong> time interacting with a phishing simulation. <strong>This is a serious security risk.</strong> You MUST improve your vigilance. DO NOT click links in suspicious emails.";
+
+        // Use bold, high-contrast red colors
+        body.style.setProperty('--bg-color', '#3f0000');
+        body.style.setProperty('--card-bg-color', '#5b0000');
+        body.style.setProperty('--tile-bg-color', '#4a0000');
+        body.style.setProperty('--border-color', '#7f1d1d');
+        body.style.setProperty('--text-color', '#fff');
+        body.style.setProperty('--heading-color', '#ffcaca');
+        body.style.setProperty('--badge-bg-color', '#ff0000');
+        
+        title.style.fontSize = '38px';
+        title.style.fontWeight = 'bold';
+      }
+    });
+  </script>
+
+</body>
+</html>
