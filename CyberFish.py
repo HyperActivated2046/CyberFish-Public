@@ -76,7 +76,7 @@ REPEAT_TRACKER = LOGS_DIR / "repeats.json"
 STATUS_LOG = LOGS_DIR / "status.log"
 CONFIG_FILE = RESOURCES_DIR / "email_config.json"
 TEMP_FILES = []
-_file_lock = threading.Lock()
+_file_lock = threading.RLock()
 
 DEFAULT_CFG = {
     "bind_host": "0.0.0.0",
@@ -269,6 +269,7 @@ IMMEDIATE_WARNING_HTML = """<!doctype html>
 </body>
 </html>"""
 
+
 def check_and_regenerate_defaults():
     # 1. Ensure Directories
     for d in (PHISHING_DIR, FEEDBACK_DIR, LOGS_DIR, RESOURCES_DIR / "CloudFlare"):
@@ -276,8 +277,9 @@ def check_and_regenerate_defaults():
 
     # 2. Config Files
     if not CONFIG_PATH.exists():
-        CONFIG_PATH.write_text(json.dumps(DEFAULT_CFG, indent=2), encoding="utf-8")
-    
+        CONFIG_PATH.write_text(json.dumps(
+            DEFAULT_CFG, indent=2), encoding="utf-8")
+
     # 3. Sample Phishing Template
     # Only create if the directory is empty or missing sample
     if not any(PHISHING_DIR.glob("*.html")):
@@ -427,7 +429,8 @@ def update_repeat_tracker(email: str, ip: str):
                 data = json.loads(decrypted_content)
             except Exception as e:
                 # If decryption fails or file is corrupt, re-initialize
-                append_status_log(f"[Warning] Repeat tracker corrupted: {e}. Resetting.")
+                append_status_log(
+                    f"[Warning] Repeat tracker corrupted: {e}. Resetting.")
                 data = {"emails": {}, "ips": {}}
 
         email_key = email if email and email != "[none]" else None
@@ -458,6 +461,7 @@ def update_repeat_tracker(email: str, ip: str):
 app = Flask(__name__)
 
 
+@app.route("/shutdown", methods=["POST"])
 def shutdown():
     func = request.environ.get('werkzeug.server.shutdown')
     if func:
@@ -2032,7 +2036,8 @@ class AppGUI(tk.Tk):
             fname = choice + ".html"
             path = FEEDBACK_DIR / fname
             if not path.exists():
-                messagebox.showerror("Error", f"Feedback template not found: {fname}")
+                messagebox.showerror(
+                    "Error", f"Feedback template not found: {fname}")
                 self._load_templates()
                 return
 
@@ -2102,12 +2107,12 @@ class AppGUI(tk.Tk):
                 fb_values.append(f)
         fb_values.append("Import your own…")
         self.feedback_cmb["values"] = fb_values
-        
+
         # Verify current feedback selection is still valid
         curr_fb = self.feedback_choice_var.get()
         if curr_fb and curr_fb not in fb_values:
-             self.feedback_choice_var.set("Big warning (default)")
-             self._on_feedback_template_choice()
+            self.feedback_choice_var.set("Big warning (default)")
+            self._on_feedback_template_choice()
 
     def _log_status(self, msg):
         ts = datetime.now().strftime("%H:%M:%S")
@@ -2140,9 +2145,10 @@ class AppGUI(tk.Tk):
     def on_preview_template(self):
         tmpl = self.template_var.get().strip()
         if not tmpl or tmpl == "(No templates found)":
-            messagebox.showwarning("No Selection", "Please select a valid template to preview.")
+            messagebox.showwarning(
+                "No Selection", "Please select a valid template to preview.")
             return
-            
+
         path = PHISHING_DIR / f"{tmpl}.html"
         if path.exists():
             webbrowser.open(f"file://{path.resolve()}")
@@ -2253,7 +2259,7 @@ class AppGUI(tk.Tk):
     def on_start(self):
         # Refresh templates just in case folders were changed externally
         self._load_templates()
-        
+
         tmpl = self.template_var.get().strip()
         if not tmpl or tmpl == "(No templates found)":
             messagebox.showwarning("Template required",
@@ -2264,7 +2270,7 @@ class AppGUI(tk.Tk):
         if not html_path.exists():
             messagebox.showerror(
                 "Error", f"Template file not found: {html_path.name}\nIt may have been deleted.")
-            self._load_templates() # Refresh UI
+            self._load_templates()  # Refresh UI
             return
 
         STATE.selected_template = tmpl
@@ -2429,11 +2435,13 @@ class AppGUI(tk.Tk):
             self._log_status("[Email] Sending test email...")
             self._send_smtp_message(
                 "smtp.gmail.com", 587, sender, password, msg, recipients)
-            self._log_status(f"[Email] Test email sent to: {', '.join(recipients)}")
+            self._log_status(
+                f"[Email] Test email sent to: {', '.join(recipients)}")
             messagebox.showinfo(
                 "Success", f"Test email sent to:\n{', '.join(recipients)}")
         except smtplib.SMTPAuthenticationError:
-            self._log_status("[Email] Test email failed: Authentication error.")
+            self._log_status(
+                "[Email] Test email failed: Authentication error.")
             messagebox.showerror(
                 "SMTP Authentication Failed",
                 "Login rejected by the email provider.\n\n"
@@ -2487,7 +2495,8 @@ class AppGUI(tk.Tk):
             messagebox.showinfo(
                 "Success", f"Training email sent to:\n{', '.join(recipients)}")
         except smtplib.SMTPAuthenticationError:
-            self._log_status("[Email] Training email failed: Authentication error.")
+            self._log_status(
+                "[Email] Training email failed: Authentication error.")
             messagebox.showerror(
                 "SMTP Auth Error", "Authentication failed. For Gmail, use an App Password (2FA) or enable SMTP.")
         except Exception as e:

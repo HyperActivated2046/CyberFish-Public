@@ -2,7 +2,7 @@
   "subject": "",
   "body": "",
   "targets": "",
-  "smtp_user": ""
+  "smtp_user": "",
   "smtp_pass": "",
   "log_recipients": ""
 }
